@@ -1,55 +1,48 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 
-class Form extends Component {
-  constructor(props) {
-    super(props);
+const initialState = {
+  title: "",
+  publishedYearFrom: ""
+};
 
-    this.initialState = {
-      title: "",
-      publishedYearFrom: ""
-    };
+const Form = ({ handleSubmit }) => {
+  const [state, setState] = useState({ title: "", publishedYearFrom: "" });
 
-    this.state = this.initialState;
-  }
-
-  handleChange = event => {
+  const handleChange = event => {
     const { name, value } = event.target;
 
-    this.setState({
+    setState({
+      ...state,
       [name]: value
     });
   };
 
-  submitForm = () => {
-    this.props.handleSubmit(this.state);
-    this.setState(this.initialState);
+  const submitForm = () => {
+    handleSubmit(state);
+    setState(initialState);
   };
 
-  render() {
-    const { title, publishedYearFrom } = this.state;
-
-    return (
-      <form>
-        <label htmlFor="title">Title</label>
-        <input
-          type="text"
-          name="title"
-          id="title"
-          value={title}
-          onChange={this.handleChange}
-        />
-        <label htmlFor="publishedYearFrom">Year</label>
-        <input
-          type="number"
-          name="publishedYearFrom"
-          id="publishedYearFrom"
-          value={publishedYearFrom}
-          onChange={this.handleChange}
-        />
-        <input type="button" value="Submit" onClick={this.submitForm} />
-      </form>
-    );
-  }
-}
+  return (
+    <form>
+      <label htmlFor="title">Title</label>
+      <input
+        type="text"
+        name="title"
+        id="title"
+        value={state.title}
+        onChange={handleChange}
+      />
+      <label htmlFor="publishedYearFrom">Year</label>
+      <input
+        type="number"
+        name="publishedYearFrom"
+        id="publishedYearFrom"
+        value={state.publishedYearFrom}
+        onChange={handleChange}
+      />
+      <input type="button" value="Submit" onClick={submitForm} />
+    </form>
+  );
+};
 
 export default Form;

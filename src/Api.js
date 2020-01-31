@@ -1,52 +1,40 @@
-import React, { Component } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import Form from "./Form";
 import Table from "./Table";
 
-class App extends Component {
-  state = {
-    comicStrips: []
-  };
+const url = "http://stapi.co/api/v1/rest/comicStrip/search";
 
-  // Code is invoked after the component is mounted/inserted into the DOM tree.
-  componentDidMount() {
-    const url = "http://stapi.co/api/v1/rest/comicStrip/search";
+const App = () => {
+  const [comicStrips, setComicStrips] = useState([]);
 
-    fetch(url)
-      .then(result => result.json())
-      .then(result => {
-        this.setState({
-          comicStrips: result.comicStrips.slice(0, 4)
-        });
-      });
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios(url);
+      setComicStrips(result.data.comicStrips.slice(0, 4));
+    };
 
-  removeComicStrip = index => {
-    let { comicStrips } = this.state;
+    fetchData();
+  }, []);
 
-    this.setState({
-      comicStrips: comicStrips.filter((comicStrip, i) => {
+  const removeComicStrip = index => {
+    setComicStrips(
+      comicStrips.filter((comicStrip, i) => {
         return i !== index;
       })
-    });
-  };
-
-  handleSubmit = comicStrip => {
-    this.setState({ comicStrips: [...this.state.comicStrips, comicStrip] });
-  };
-
-  render() {
-    const { comicStrips } = this.state;
-
-    return (
-      <div className="container">
-        <Table
-          comicStripData={comicStrips}
-          removeComicStrip={this.removeComicStrip}
-        />
-        <Form handleSubmit={this.handleSubmit} />
-      </div>
     );
-  }
-}
+  };
+
+  const handleSubmit = comicStrip => {
+    setComicStrips([...comicStrips, comicStrip]);
+  };
+
+  return (
+    <div className="container">
+      <Table comicStripData={comicStrips} removeComicStrip={removeComicStrip} />
+      <Form handleSubmit={handleSubmit} />
+    </div>
+  );
+};
 
 export default App;
