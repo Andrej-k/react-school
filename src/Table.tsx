@@ -6,9 +6,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import React from "react";
 
-const row = (x, i, header, removeComicStrip) => (
+const row = (x: any, i: number, header: any, removeComicStrip: any) => (
   <TableRow key={`tr-${i}`}>
-    {header.map((y, k) => (
+    {header.map((y: any, k: number) => (
       <TableCell key={`trc-${k}`}>{x[y.prop]}</TableCell>
     ))}
     <TableCell>
@@ -23,17 +23,19 @@ const row = (x, i, header, removeComicStrip) => (
   </TableRow>
 );
 
-export default ({ comicStripData, removeComicStrip, header }) => (
+export default ({ comicStripData, removeComicStrip, header }: any) => (
   <Table>
     <TableHead>
       <TableRow>
-        {header.map((x, i) => (
+        {header.map((x: any, i: number) => (
           <TableCell key={`thc-${i}`}>{x.name}</TableCell>
         ))}
       </TableRow>
     </TableHead>
     <TableBody>
-      {comicStripData.map((x, i) => row(x, i, header, removeComicStrip))}
+      {comicStripData.map((x: any, i: number) =>
+        row(x, i, header, removeComicStrip)
+      )}
     </TableBody>
   </Table>
 );

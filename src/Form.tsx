@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Form = ({ handleSubmit }) => {
+const Form = ({ handleSubmit }: any) => {
   const formik = useFormik({
     initialValues: {
       title: "",

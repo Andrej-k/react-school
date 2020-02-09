@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { ComisStrip } from "./comicStrip.interface";
 import Form from "./Form";
 import Table from "./Table";
 
 const url = "http://stapi.co/api/v1/rest/comicStrip/search";
 
 const App = () => {
-  const [comicStrips, setComicStrips] = useState([]);
+  const [comicStrips, setComicStrips] = useState([] as ComisStrip[]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,17 +18,17 @@ const App = () => {
     fetchData();
   }, []);
 
-  const removeComicStrip = index => {
+  function removeComicStrip(index: number): void {
     setComicStrips(
-      comicStrips.filter((comicStrip, i) => {
+      comicStrips.filter((comicStrip: ComisStrip, i: number) => {
         return i !== index;
       })
     );
-  };
+  }
 
-  const handleSubmit = comicStrip => {
+  function handleSubmit(comicStrip: ComisStrip): void {
     setComicStrips([...comicStrips, comicStrip]);
-  };
+  }
 
   return (
     <div className="container">
@@ -45,7 +46,6 @@ const App = () => {
           }
         ]}
       />
-      {/* <Table comicStripData={comicStrips} removeComicStrip={removeComicStrip} /> */}
       <Form handleSubmit={handleSubmit} />
     </div>
   );
