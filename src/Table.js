@@ -1,3 +1,4 @@
+import Button from "@material-ui/core/Button";
 import React from "react";
 
 const TableHeader = () => {
@@ -18,7 +19,14 @@ const TableBody = props => {
         <td>{row.title}</td>
         <td>{row.publishedYearFrom}</td>
         <td>
-          <button onClick={() => props.removeComicStrip(index)}>Delete</button>
+          <Button
+            variant="contained"
+            color="primary"
+            value="Submit"
+            onClick={() => props.removeComicStrip(index)}
+          >
+            Delete
+          </Button>
         </td>
       </tr>
     );

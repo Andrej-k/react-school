@@ -1,3 +1,5 @@
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 import React, { useState } from "react";
 
 const initialState = {
@@ -25,22 +27,18 @@ const Form = ({ handleSubmit }) => {
   return (
     <form>
       <label htmlFor="title">Title</label>
-      <input
-        type="text"
-        name="title"
-        id="title"
-        value={state.title}
-        onChange={handleChange}
-      />
+      <TextField required type="text" name="title" id="title" value={state.title} label="Title" variant="outlined" size="small" fullWidth onChange={handleChange} />
       <label htmlFor="publishedYearFrom">Year</label>
-      <input
-        type="number"
-        name="publishedYearFrom"
-        id="publishedYearFrom"
-        value={state.publishedYearFrom}
-        onChange={handleChange}
-      />
-      <input type="button" value="Submit" onClick={submitForm} />
+      <TextField required type="number" name="publishedYearFrom" id="publishedYearFrom" value={state.publishedYearFrom} label="Year" variant="outlined" size="small" fullWidth onChange={handleChange} />
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        value="Submit"
+        onClick={submitForm}
+      >
+        Submit
+      </Button>
     </form>
   );
 };
