@@ -1,52 +1,39 @@
 import Button from "@material-ui/core/Button";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
 import React from "react";
 
-const TableHeader = () => {
-  return (
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Year</th>
-      </tr>
-    </thead>
-  );
-};
+const row = (x, i, header, removeComicStrip) => (
+  <TableRow key={`tr-${i}`}>
+    {header.map((y, k) => (
+      <TableCell key={`trc-${k}`}>{x[y.prop]}</TableCell>
+    ))}
+    <TableCell>
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={() => removeComicStrip(i)}
+      >
+        Delete
+      </Button>
+    </TableCell>
+  </TableRow>
+);
 
-const TableBody = props => {
-  const rows = props.comicStripData.map((row, index) => {
-    return (
-      <tr key={index}>
-        <td>{row.title}</td>
-        <td>{row.publishedYearFrom}</td>
-        <td>
-          <Button
-            variant="contained"
-            color="primary"
-            value="Submit"
-            onClick={() => props.removeComicStrip(index)}
-          >
-            Delete
-          </Button>
-        </td>
-      </tr>
-    );
-  });
-
-  return <tbody>{rows}</tbody>;
-};
-
-const Table = props => {
-  const { comicStripData, removeComicStrip } = props;
-
-  return (
-    <table>
-      <TableHeader />
-      <TableBody
-        comicStripData={comicStripData}
-        removeComicStrip={removeComicStrip}
-      />
-    </table>
-  );
-};
-
-export default Table;
+export default ({ comicStripData, removeComicStrip, header }) => (
+  <Table>
+    <TableHead>
+      <TableRow>
+        {header.map((x, i) => (
+          <TableCell key={`thc-${i}`}>{x.name}</TableCell>
+        ))}
+      </TableRow>
+    </TableHead>
+    <TableBody>
+      {comicStripData.map((x, i) => row(x, i, header, removeComicStrip))}
+    </TableBody>
+  </Table>
+);

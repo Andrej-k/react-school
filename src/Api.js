@@ -31,7 +31,21 @@ const App = () => {
 
   return (
     <div className="container">
-      <Table comicStripData={comicStrips} removeComicStrip={removeComicStrip} />
+      <Table
+        comicStripData={comicStrips}
+        removeComicStrip={removeComicStrip}
+        header={[
+          {
+            name: "Title",
+            prop: "title"
+          },
+          {
+            name: "Year",
+            prop: "publishedYearFrom"
+          }
+        ]}
+      />
+      {/* <Table comicStripData={comicStrips} removeComicStrip={removeComicStrip} /> */}
       <Form handleSubmit={handleSubmit} />
     </div>
   );
