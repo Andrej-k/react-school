@@ -8,11 +8,19 @@ const ThemeContext = React.createContext({});
 
 const ThemeProvider = (props: any) => {
   const [comicStrips, setComicStrips] = useState([] as ComicStrip[]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios(url);
-      setComicStrips(result.data.comicStrips.slice(0, 4));
+      try {
+        const result = await axios(url);
+        setComicStrips(result.data.comicStrips.slice(0, 4));
+        setLoading(false);
+      } catch (e) {
+        if (e) {
+          console.log(e.message);
+        }
+      }
     };
 
     fetchData();
@@ -47,7 +55,8 @@ const ThemeProvider = (props: any) => {
         comicStrips,
         removeComicStrip,
         header,
-        handleSubmit
+        handleSubmit,
+        loading
       }}
     >
       {props.children}
