@@ -2,8 +2,9 @@ import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { useFormik } from "formik";
-import React from "react";
+import React, { ReactElement, useContext } from "react";
 import * as Yup from "yup";
+import { ThemeContext } from "../Context";
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -19,7 +20,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Form = ({ handleSubmit }: any) => {
+export default function FormComponent(): ReactElement {
+  const appContext = useContext(ThemeContext);
+  const { handleSubmit }: any = appContext;
+
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -99,6 +103,4 @@ const Form = ({ handleSubmit }: any) => {
       </Button>
     </form>
   );
-};
-
-export default Form;
+}

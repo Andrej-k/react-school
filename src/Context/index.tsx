@@ -1,12 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Form from "./Components/Form";
-import Table from "./Components/Table";
-import { ComicStrip } from "./Interface/comicStrip.interface";
+import { ComicStrip } from "../Interface/comicStrip.interface";
 
 const url = "http://stapi.co/api/v1/rest/comicStrip/search";
 
-const App = () => {
+const ThemeContext = React.createContext({});
+
+const ThemeProvider = (props: any) => {
   const [comicStrips, setComicStrips] = useState([] as ComicStrip[]);
 
   useEffect(() => {
@@ -30,25 +30,29 @@ const App = () => {
     setComicStrips([...comicStrips, comicStrip]);
   }
 
+  const header = [
+    {
+      name: "Title",
+      prop: "title"
+    },
+    {
+      name: "Year",
+      prop: "publishedYearFrom"
+    }
+  ];
+
   return (
-    <div className="container">
-      <Table
-        comicStripData={comicStrips}
-        removeComicStrip={removeComicStrip}
-        header={[
-          {
-            name: "Title",
-            prop: "title"
-          },
-          {
-            name: "Year",
-            prop: "publishedYearFrom"
-          }
-        ]}
-      />
-      <Form handleSubmit={handleSubmit} />
-    </div>
+    <ThemeContext.Provider
+      value={{
+        comicStrips,
+        removeComicStrip,
+        header,
+        handleSubmit
+      }}
+    >
+      {props.children}
+    </ThemeContext.Provider>
   );
 };
 
-export default App;
+export { ThemeProvider, ThemeContext };

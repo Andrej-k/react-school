@@ -4,7 +4,8 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import React from "react";
+import React, { ReactElement, useContext } from "react";
+import { ThemeContext } from "../Context";
 
 const row = (x: any, i: number, header: any, removeComicStrip: any) => (
   <TableRow key={`tr-${i}`}>
@@ -23,19 +24,24 @@ const row = (x: any, i: number, header: any, removeComicStrip: any) => (
   </TableRow>
 );
 
-export default ({ comicStripData, removeComicStrip, header }: any) => (
-  <Table>
-    <TableHead>
-      <TableRow>
-        {header.map((x: any, i: number) => (
-          <TableCell key={`thc-${i}`}>{x.name}</TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-    <TableBody>
-      {comicStripData.map((x: any, i: number) =>
-        row(x, i, header, removeComicStrip)
-      )}
-    </TableBody>
-  </Table>
-);
+export default function TableComponent(): ReactElement {
+  const appContext = useContext(ThemeContext);
+  const { comicStrips, removeComicStrip, header }: any = appContext;
+
+  return (
+    <Table>
+      <TableHead>
+        <TableRow>
+          {header.map((x: any, i: number) => (
+            <TableCell key={`thc-${i}`}>{x.name}</TableCell>
+          ))}
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {comicStrips.map((x: any, i: number) =>
+          row(x, i, header, removeComicStrip)
+        )}
+      </TableBody>
+    </Table>
+  );
+}
